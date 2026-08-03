@@ -2,15 +2,15 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = os.getenv("mysql+pymysql://avnadmin:AVNS_R7zPpzBjoL6Nr-cDFrP@mysql-dbf90ba-saivandani7-a273.k.aivencloud.com:12909/defaultdb")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL environment variable is not set")
 
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"ssl": {"ssl_disabled": False}}
+    connect_args={"ssl": {}}
 )
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 Base = declarative_base()
